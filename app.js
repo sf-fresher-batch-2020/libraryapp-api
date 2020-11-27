@@ -30,9 +30,9 @@ app.get('/api/profiles/:id', getProfile);
 app.post('/api/books', books);
 app.get('/api/books', getAllbooks);
 app.get('/api/books/:id', getbook);
-app.post('/api/books/delete', deletebook);
+app.delete('/api/books/:id', deletebook);
 //borrowbook
-app.get('/api/borrowbooks', borrowbooks);
+app.post('/api/borrowbooks', borrowbooks);
 app.get('/api/borrowbooks', getborrowbooks);
 
 //signup and signin
@@ -92,8 +92,8 @@ async function getbook(req, res) {
     res.status(200).json(result[0]);
 }
 async function deletebook(req, res) {
-    const book = req.body;
-    let params = [book.bookid];
+    const id = req.params.id;
+    let params = [id];
     const result = await pool.query("DELETE FROM books WHERE bookid = ?", params);
     res.status(201).json(result[0].info);
 }
